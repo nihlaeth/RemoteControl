@@ -10,17 +10,27 @@ class Daemon:
         Usage: subclass the Daemon class and override the run() method
         """
         def __init__(self, pidfile, stdin='/dev/null', stdout='/dev/null', stderr='/dev/null'):
+                self.debug("start init\n")
                 self.stdin = stdin
                 self.stdout = stdout
                 self.stderr = stderr
                 self.pidfile = pidfile
-       
+                self.debug("stop init\n")
+        def debug(self, message):
+            """
+            do some basic reporting
+            """
+            debug=0
+            if(debug==1):
+                sys.stdout.write(message)
+
         def daemonize(self):
                 """
                 do the UNIX double-fork magic, see Stevens' "Advanced
                 Programming in the UNIX Environment" for details (ISBN 0201563177)
                 http://www.erlenstar.demon.co.uk/unix/faq_2.html#SEC16
                 """
+                self.debug("start daemonize\n")
                 try:
                         pid = os.fork()
                         if pid > 0:
@@ -29,12 +39,12 @@ class Daemon:
                 except OSError, e:
                         sys.stderr.write("fork #1 failed: %d (%s)\n" % (e.errno, e.strerror))
                         sys.exit(1)
-       
+                self.debug("split off first fork\n") 
                 # decouple from parent environment
                 os.chdir("/")
                 os.setsid()
                 os.umask(0)
-       
+                
                 # do second fork
                 try:
                         pid = os.fork()
@@ -44,7 +54,7 @@ class Daemon:
                 except OSError, e:
                         sys.stderr.write("fork #2 failed: %d (%s)\n" % (e.errno, e.strerror))
                         sys.exit(1)
-       
+                self.debug("split off second fork\n")
                 # redirect standard file descriptors
                 sys.stdout.flush()
                 sys.stderr.flush()
@@ -54,19 +64,25 @@ class Daemon:
                 os.dup2(si.fileno(), sys.stdin.fileno())
                 os.dup2(so.fileno(), sys.stdout.fileno())
                 os.dup2(se.fileno(), sys.stderr.fileno())
-       
+                
+                self.debug("write pidfile\n")
                 # write pidfile
                 atexit.register(self.delpid)
                 pid = str(os.getpid())
                 file(self.pidfile,'w+').write("%s\n" % pid)
+                
+                self.debug("end daemonize\n")
        
         def delpid(self):
+                self.debug("start delpid\n")
                 os.remove(self.pidfile)
+                self.debug("stop delpid\n")
  
         def start(self):
                 """
                 Start the daemon
                 """
+                self.debug("start start\n")
                 # Check for a pidfile to see if the daemon already runs
                 try:
                         pf = file(self.pidfile,'r')
@@ -83,11 +99,13 @@ class Daemon:
                 # Start the daemon
                 self.daemonize()
                 self.run()
+                self.debug("stop start\n")
  
         def stop(self):
                 """
                 Stop the daemon
                 """
+                self.debug("start stop\n")
                 # Get the pid from the pidfile
                 try:
                         pf = file(self.pidfile,'r')
@@ -114,13 +132,16 @@ class Daemon:
                         else:
                                 print str(err)
                                 sys.exit(1)
+                self.debug("stop stop\n")
  
         def restart(self):
                 """
                 Restart the daemon
                 """
+                self.debug("start restart\n")
                 self.stop()
                 self.start()
+                self.debug("stop restart\n")
  
         def run(self):
                 """
