@@ -1,8 +1,14 @@
 #!/usr/bin/env python
  
-import sys, time, socket
+import sys, time, socket, subprocess
 from daemon import daemon
- 
+
+port = 94502
+client = "192.168.1.3"
+username = "nihlaeth"
+key = "~/.ssh/cerridwen"
+
+
 class MyDaemon(daemon.Daemon):
     def run(self):
         serve()
@@ -27,32 +33,20 @@ if __name__ == "__main__":
 
 
 def serve():
+	subprocess.call(["ssh", "-f", "-N", "-L", "127.0.0.1:"+str(port)+":"+client+":"+str(port), "-i", key, username+"@"+client])
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     except socket.error, msg:
         print "Failed to create socket:", msg
         syst.exit();
     print "Created socket"
-    port = 94502
-    s.bind(("", port))
+    s.bind(("127.0.0.1", port))
     print "Now listening on port", port
     s.listen(10)
-    #pynotify.init("Python notification Daemon")
     while 1:
         client, address = s.accept()
         data = client.recv(4096)
-        #print "Got connection from", address
-        #print data
         control(data)
-        #datalist = data.split(":", 1)
-        #title = datalist[0]
-        #try:
-        #    body = datalist[1]
-        #except IndexError:
-        #    print "No notification body received, using title"
-        #    body = title
-        #n = pynotify.Notification(title, body)
-        #n.show()
         client.close()
 
 def pk(k): #press key
