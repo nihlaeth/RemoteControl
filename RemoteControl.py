@@ -10,7 +10,7 @@ key = "/root/.ssh/arthemis"
 
 
 def pk(k): #press key
-    subprocess.call(["xdotool", "key", k])
+    subprocess.call(["xdotool", "key", "--clearmodifiers", "--delay", "25", k])
 
 def control(c):
     if(c=='window-up'):
@@ -45,6 +45,39 @@ def control(c):
         pk('super+-')
     elif(c=='workspace-12'):
         pk('super+=')
+    elif(c=='fullscreen'):
+        pk('super+f')
+    elif(c=='new-terminal'):
+        pk('super+t')
+    elif(c=='open-menu'):
+        pk('super+m')
+    elif(c=='down'):
+        pk('Down')
+    elif(c=='up'):
+        pk('Up')
+    elif(c=='left'):
+        pk('Left')
+    elif(c=='right'):
+        pk('Right')
+    elif(c=='backspace'):
+        pk('Delete')
+    elif(c=='enter'):
+        pk('Return')
+    elif(c=='tab'):
+        pk('Tab')
+    elif(c=='home'):
+        pk('Home')
+    elif(c=='end'):
+        pk('End')
+    elif(c=='detach-screen'):
+        pk('Control+a')
+        pk('d')
+    elif(c=='terminate'):
+        pk('Control+c')
+    elif(c=='copy'):
+        pk('Control+Shift+c')
+    elif(c=='paste'):
+        pk('Control+Shift+p')
     else:
         pass
 
