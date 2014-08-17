@@ -3,51 +3,11 @@
 import sys, time, socket, subprocess
 from daemon import daemon
 
-port = 94502
-client = "192.168.1.3"
+port = 64502
+clientip = "192.168.1.3"
 username = "nihlaeth"
-key = "~/.ssh/cerridwen"
+key = "/root/.ssh/arthemis"
 
-
-class MyDaemon(daemon.Daemon):
-    def run(self):
-        serve()
- 
-if __name__ == "__main__":
-    daemon = MyDaemon('/var/run/RemoteControl.pid')
-    if len(sys.argv) == 2:
-        if 'start' == sys.argv[1]:
-            daemon.start()
-        elif 'stop' == sys.argv[1]:
-            daemon.stop()
-        elif 'restart' == sys.argv[1]:
-            daemon.restart()
-        else:
-            print "Unknown command"
-            sys.exit(2)
-        sys.exit(0)
-    else:
-        print "usage: %s start|stop|restart" % sys.argv[0]
-        sys.exit(2)
-
-
-
-def serve():
-	subprocess.call(["ssh", "-f", "-N", "-L", "127.0.0.1:"+str(port)+":"+client+":"+str(port), "-i", key, username+"@"+client])
-    try:
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    except socket.error, msg:
-        print "Failed to create socket:", msg
-        syst.exit();
-    print "Created socket"
-    s.bind(("127.0.0.1", port))
-    print "Now listening on port", port
-    s.listen(10)
-    while 1:
-        client, address = s.accept()
-        data = client.recv(4096)
-        control(data)
-        client.close()
 
 def pk(k): #press key
     subprocess.call(["xdotool", "key", k])
@@ -87,6 +47,54 @@ def control(c):
         pk('super+=')
     else:
         pass
+
+
+def serve():
+    subprocess.call(["ssh","-fN", "-R", str(port)+":localhost:"+str(port), "-i", key, username+"@"+clientip])
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    except socket.error, msg:
+        sys.stderr.write("Failed to create socket:" + msg+ '\n')
+        sys.exit();
+    sys.stdout.write("Created socket\n")
+    s.bind(("127.0.0.1", port))
+    sys.stdout.write("Now listening on port"+str(port)+'\n')
+    s.listen(10)
+    while 1:
+        client, address = s.accept()
+        data = client.recv(4096)
+        control(data)
+        client.close()
+
+
+
+
+class MyDaemon(daemon.Daemon):
+    def run(self):
+	sys.stdout.write("running!\n")
+        serve()
+ 
+if __name__ == "__main__":
+    daemon = MyDaemon('/var/run/RemoteControl.pid')
+    if len(sys.argv) == 2:
+        if 'start' == sys.argv[1]:
+            sys.stdout.write("Starting...\n")
+            daemon.start()
+	    sys.stdout.write("Started!\n")
+        elif 'stop' == sys.argv[1]:
+            daemon.stop()
+        elif 'restart' == sys.argv[1]:
+            daemon.restart()
+        else:
+            print "Unknown command"
+            sys.exit(2)
+        sys.exit(0)
+    else:
+        print "usage: %s start|stop|restart" % sys.argv[0]
+        sys.exit(2)
+
+
+
 
 
 
