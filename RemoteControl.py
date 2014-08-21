@@ -4,9 +4,9 @@ import sys, time, socket, subprocess
 from daemon import daemon
 
 port = 64502
-clientip = "192.168.1.3"
-username = "nihlaeth"
-key = "/root/.ssh/arthemis"
+clientip = "ip of the computer that has speech recognition"
+username = "username"
+key = "/full/path/to/ssh/key"
 
 
 def pk(k): #press key
