@@ -8,7 +8,7 @@ port = 64502 ## the port this module will use to communicate. No need to put it 
 clientip = "[clientip]" ## ip of the computer that has speech recognition
 username = "[username]" ## username on the client pc
 key = "[full path to ssh key]" ## don't use ~ as short for your home directory, it won't work
-
+pidfile = "[path to pid file/RemoteControl.pid" ## some location where you have write privileges, and it won't be in the way
 
 def pk(k): #press key
     subprocess.call(["xdotool", "key", "--clearmodifiers", "--delay", "25", k])
@@ -109,7 +109,7 @@ class MyDaemon(daemon.Daemon):
         serve()
  
 if __name__ == "__main__":
-    daemon = MyDaemon('/var/run/RemoteControl.pid')
+    daemon = MyDaemon(pidfile)
     if len(sys.argv) == 2:
         if 'start' == sys.argv[1]:
             sys.stdout.write("Starting...\n")
