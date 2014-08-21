@@ -37,6 +37,7 @@ Now we're going to edit the right settings into RemoteControl.py:
     clientip = "[client ip]"
     username = "[username]" ## username on client pc
     key = "[full path to ssh key]" ## don't use ~ to refer to the home directory, it won't work
+    pidfile = "[path to pid file/RemoteControl.pid]" ## some location where you have write privileges, and it won't be in the way
 
 Now start the daemon:
     
@@ -55,6 +56,51 @@ For a command cheat-sheet, look in the server script. You can now configure your
     #!/bin/bash
     /path/to/script/RemoteClient.py workspace-1
 
+Troubleshooting
+============
+
+If you get errors of this fashion:
+
+    /usr/bin/env python: No such file or directory
+
+Execute the following command:
+
+    $ which env
+
+And change the first line of the file you were executing to that path, for example:
+
+    #!/bin/env python
+
+If your client throws this error:
+    
+    Traceback (most recent call last):
+      File "./RemoteClient.py", line 9, in <module>
+        s.connect(("localhost", 64502))
+      File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/socket.py", line 224, in meth
+        return getattr(self._sock,name)(*args)
+    socket.error: [Errno 61] Connection refused
+
+This most likely means something is wrong with the ssh tunnel. You can check by executing this on the client machine:
+
+    $ telnet localhost 64502
+
+If that says connection refused, the ssh tunnel is not up.
+
+To try if the key is working, go to the server pc and execute this:
+
+    $ ssh -i [path/to/key] [username]@[clientip]
+
+If it asks for a password, try ssh-copy-id again. If it refuses connection, check if your client pc accepts incomming ssh connections (in os x you can turn this on in system preferences->sharing->remote-login).
+
+Another option is that the server process could not create it's pid file in the specified location. You can check this by trying to shut down the server proccess on the server pc:
+
+    $ ./RemoteControl.py stop
+
+If it throws an error, like this:
+
+    pidfile /var/run/RemoteControl.pid does not exist. Daemon not running?
+
+You should probably edit the pid path in the server settings, to a location where you have permissions.
 
 To-Do
 ============
@@ -63,4 +109,4 @@ To-Do
 * include support for domotica through usb-uart / lircd supported hardware
 * document commands
 * separate settings into config file
-
+* improve error reporting. The daemon library turns this off by default.
