@@ -9,9 +9,58 @@ The problem here is that Dragon does not play nice with synergy. I have a lot of
 
 I've executed remote commands through ssh (with key authentication) before, but it's slow and I hadn't found a way to fire key events yet. Then I found xdotools and I decided to write a python module that'd send commands over an ssh tunnel, using xdotools & i3-msg (I use i3 as window manager). For security reasons the script only executes a pre-defined set of commands, so if you want to add to it, you'll have to do some coding.
 
+Getting started
+============
+First of all, you need an ssh key to access the client pc (the one with speech recognition on it) from the server pc (the one you want to control with speech recognition). 
+
+On the server pc:
+
+This will create a key:
+
+    $ ssh-keygen
+
+Follow the on-screen instructions.
+
+Now we'll copy that key over to the client:
+
+    $ ssh-copy-id -i /home/[username]/.ssh/[name-key] [username]@[clientip]
+
+Now we're going to edit the right settings into RemoteControl.py:
+
+    #!/usr/bin/env python 
+    ## if env is located somewhere else, edit this path
+ 
+    import sys, time, socket, subprocess
+    from daemon import daemon
+
+    port = 64502 ## port that's going to be used by this module
+    clientip = "[client ip]"
+    username = "[username]" ## username on client pc
+    key = "[full path to ssh key]" ## don't use ~ to refer to the home directory, it won't work
+
+Now start the daemon:
+    
+    ./RemoteControl.py start
+
+On the client pc:
+
+Copy the RemoteClient.py script over to a conveniet location. Env is not in the same place in linux as it is in os x, so edit the first line as necessary. If you edited the port number in the server script, do so in the client script as well. You are now ready to use the client script. You can put it in /usr/bin to make it system-wide executable, or some other place that's more private. 
+
+Usage:
+
+    /path/to/script/RemoteClient.py command
+
+For a command cheat-sheet, look in the server script. You can now configure your speech recognition to use this script. In dragon for mac, go to tools->commands. Add a new command with global scope. Name it whatever speech pattern you want to use to activate it, and give it type shell script. In the input field, put something like this:
+
+    #!/bin/bash
+    /path/to/script/RemoteClient.py workspace-1
+
+
 To-Do
 ============
-* client module
-* startup script for ssh tunnel & server
-* server module
+* close ssh tunnel when shutting down
+* add more commands
+* include support for domotica through usb-uart / lircd supported hardware
+* document commands
+* separate settings into config file
 
