@@ -1,12 +1,12 @@
-#!/usr/bin/env python
+#!/usr/bin/env python ## if env is located somewhere else, change this path
  
 import sys, time, socket, subprocess
 from daemon import daemon
 
-port = 64502
-clientip = "ip of the computer that has speech recognition"
-username = "username"
-key = "/full/path/to/ssh/key"
+port = 64502 ## the port this module will use to communicate. No need to put it in the firewall
+clientip = "[clientip]" ## ip of the computer that has speech recognition
+username = "[username]" ## username on the client pc
+key = "[full path to ssh key]" ## don't use ~ as short for your home directory, it won't work
 
 
 def pk(k): #press key
