@@ -79,6 +79,8 @@ def control(c):
         pk('Control+Shift+c')
     elif(c=='paste'):
         pk('Control+Shift+p')
+    elif(c=='tw-train'):
+        pk('Enter 2 Enter 2 Enter 2 Enter')
     else:
         pass
 
