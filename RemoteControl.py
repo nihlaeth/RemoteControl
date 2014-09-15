@@ -80,7 +80,7 @@ def control(c):
     elif(c=='paste'):
         pk('Control+Shift+p')
     elif(c=='tw-train'):
-        subprocess.call(["xdotool", "key", "--clearmodifiers", "--delay", "25", "Return", "2", "Return", "2", "Return", "2", "Return"])
+        subprocess.call(["xdotool", "key", "--clearmodifiers", "--delay", "25", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return"])
     elif(c=='ff-new-tab'):
         pk('Control+t')
     elif(c=='ff-back'):
