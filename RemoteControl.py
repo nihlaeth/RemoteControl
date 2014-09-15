@@ -43,9 +43,9 @@ def control(c):
     elif(c=='workspace-10'):
         pk('super+0')
     elif(c=='workspace-11'):
-        pk('super+-')
+        pk('super+minus')
     elif(c=='workspace-12'):
-        pk('super+=')
+        pk('super+equal')
     elif(c=='fullscreen'):
         pk('super+f')
     elif(c=='new-terminal'):
