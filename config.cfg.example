@@ -4,4 +4,6 @@ clientip = '[clientip]'
 username = '[username]'
 key = '[full path to ssh key]' # do not use ~ for home directory
 pidfile = '[full path to pid file]' # again, don't use ~ for your home directory
+debug = False # if you are having trouble, set this to True. It will output debug messages to the console instead of to the logs
+
 

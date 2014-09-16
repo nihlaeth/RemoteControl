@@ -9,7 +9,8 @@ class Daemon:
        
         Usage: subclass the Daemon class and override the run() method
         """
-        def __init__(self, pidfile, stdin='/dev/null', stdout='/dev/null', stderr='/dev/null'):
+        def __init__(self, pidfile, debugb=False, stdin='/dev/null', stdout='/dev/null', stderr='/dev/null'):
+                self.debugb=debug
                 self.debug("start init\n")
                 self.stdin = stdin
                 self.stdout = stdout
@@ -20,8 +21,7 @@ class Daemon:
             """
             do some basic reporting
             """
-            debug=0
-            if(debug==1):
+            if(self.debugb==True):
                 sys.stdout.write(message)
 
         def daemonize(self):
@@ -55,15 +55,17 @@ class Daemon:
                         sys.stderr.write("fork #2 failed: %d (%s)\n" % (e.errno, e.strerror))
                         sys.exit(1)
                 self.debug("split off second fork\n")
-                # redirect standard file descriptors
-                sys.stdout.flush()
-                sys.stderr.flush()
-                si = file(self.stdin, 'r')
-                so = file(self.stdout, 'a+')
-                se = file(self.stderr, 'a+', 0)
-                os.dup2(si.fileno(), sys.stdin.fileno())
-                os.dup2(so.fileno(), sys.stdout.fileno())
-                os.dup2(se.fileno(), sys.stderr.fileno())
+                
+                if(self.debugb==True):
+                    # redirect standard file descriptors
+                    sys.stdout.flush()
+                    sys.stderr.flush()
+                    si = file(self.stdin, 'r')
+                    so = file(self.stdout, 'a+')
+                    se = file(self.stderr, 'a+', 0)
+                    os.dup2(si.fileno(), sys.stdin.fileno())
+                    os.dup2(so.fileno(), sys.stdout.fileno())
+                    os.dup2(se.fileno(), sys.stderr.fileno())
                 
                 self.debug("write pidfile\n")
                 # write pidfile
