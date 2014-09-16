@@ -1,11 +1,11 @@
 [General]
-port = '64502'
-clientip = '[clientip]'
-username = '[username]'
-key = '[full path to ssh key]' ; do not use ~ for home directory
-pidfile = '[full path to pid file]' ; again, don't use ~ for your home directory
-debug = 'false' ; if you are having trouble, set this to 'true' or 'on'. It will output debug messages to the console instead of to the logs
-stdin = '/dev/null' ; don't change this
-stdout =  '/dev/null' ; if you want to log regular output, change this to the logfile
-stderr =  '/dev/null' ; if you want to log errors, change this to the logfile
+port = 64502
+clientip = [clientip]
+username = [username]
+key = [full path to ssh key] ; do not use ~ for home directory
+pidfile = [full path to pid file] ; again, dont use ~ for your home directory
+debug = false ; if you are having trouble, set this to true or on. It will output debug messages to the console instead of to the logs
+stdin = /dev/null ; dont change this
+stdout =  /dev/null ; if you want to log regular output, change this to the logfile
+stderr =  /dev/null ; if you want to log errors, change this to the logfile
 
