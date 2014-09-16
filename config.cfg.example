@@ -1,0 +1,7 @@
+[General]
+port = '64502'
+clientip = '[clientip]'
+username = '[username]'
+key = '[full path to ssh key]' # do not use ~ for home directory
+pidfile = '[full path to pid file]' # again, don't use ~ for your home directory
+

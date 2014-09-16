@@ -1,14 +1,19 @@
 #!/usr/bin/env python 
 ## if env is located somewhere else, change this path
  
-import sys, time, socket, subprocess
+import sys, time, socket, subprocess, ConfigParser
 from daemon import daemon
 
-port = 64502 ## the port this module will use to communicate. No need to put it in the firewall
-clientip = "[clientip]" ## ip of the computer that has speech recognition
-username = "[username]" ## username on the client pc
-key = "[full path to ssh key]" ## don't use ~ as short for your home directory, it won't work
-pidfile = "[path to pid file/RemoteControl.pid" ## some location where you have write privileges, and it won't be in the way
+config = ConfigParser.ConfigParser()
+config.read('config.cfg')
+
+# Set the third, optional argument of get to 1 if you wish to use raw mode.
+port = config.get('General', 'port')
+clientip = config.get('General', 'clientip')
+username = config.get('General', 'username')
+key = config.get('General', 'key')
+pidfile = config.get('General', 'pidfile')
+
 
 def pk(k): #press key
     subprocess.call(["xdotool", "key", "--clearmodifiers", "--delay", "25", k])

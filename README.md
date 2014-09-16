@@ -25,19 +25,19 @@ Now we'll copy that key over to the client:
 
     $ ssh-copy-id -i /home/[username]/.ssh/[name-key] [username]@[clientip]
 
-Now we're going to edit the right settings into RemoteControl.py:
+Now we're going to copy the example config file to config.cfg:
+    
+    $ cp config.cfg.example config.cfg
 
-    #!/usr/bin/env python 
-    ## if env is located somewhere else, edit this path
- 
-    import sys, time, socket, subprocess
-    from daemon import daemon
+And edit it:
 
-    port = 64502 ## port that's going to be used by this module
-    clientip = "[client ip]"
-    username = "[username]" ## username on client pc
-    key = "[full path to ssh key]" ## don't use ~ to refer to the home directory, it won't work
-    pidfile = "[path to pid file/RemoteControl.pid]" ## some location where you have write privileges, and it won't be in the way
+    [General]
+    port = '64502' # change this in the RemoteClient.py file if you choose to edit it
+    clientip = '[clientip]' # ip of the pc that has speech recognition
+    username = '[username]' # userqme on the client pc
+    key = '[full path to ssh key]' # do not use ~ for home directory - this will be something like /home/[username]/.ssh/[keyname]
+    pidfile = '[full path to pid file]' # again, don't use ~ for your home directory - may I suggest /home/[username]/pid/RemoteControl.pid
+
 
 Now start the daemon:
     
