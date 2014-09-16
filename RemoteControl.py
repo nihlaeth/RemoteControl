@@ -181,7 +181,7 @@ def serve():
         sys.stderr.write("Failed to create socket:" + msg+ '\n')
         sys.exit();
     sys.stdout.write("Created socket\n")
-    s.bind(("127.0.0.1", port))
+    s.bind(("127.0.0.1", int(port)))
     sys.stdout.write("Now listening on port"+str(port)+'\n')
     s.listen(10)
     while 1:
