@@ -13,9 +13,9 @@ clientip = config.get('General', 'clientip')
 username = config.get('General', 'username')
 key = config.get('General', 'key')
 pidfile = config.get('General', 'pidfile')
-debugv = config.get('General', 'debug')
-if(debugv=="true" or debugv=="1" or debugv=="on"): debugv = True
-else: debugv = False
+debug = config.get('General', 'debug')
+if(debug=="true" or debug=="1" or debug=="on"): debug = True
+else: debug = False
 stdin = config.get('General', 'stdin')
 stdout = config.get('General', 'stdout')
 stderr = config.get('General', 'stderr')
@@ -199,7 +199,7 @@ class MyDaemon(daemon.Daemon):
         serve()
  
 if __name__ == "__main__":
-    daemon = MyDaemon(pidfile, debugb=debugv, stdin=stdin, stdout=stdout, stderr=stderr)
+    daemon = MyDaemon(pidfile, debugb=debug, stdin=stdin, stdout=stdout, stderr=stderr)
     if len(sys.argv) == 2:
         if 'start' == sys.argv[1]:
             sys.stdout.write("Starting...\n")
