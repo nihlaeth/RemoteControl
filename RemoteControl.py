@@ -14,6 +14,9 @@ username = config.get('General', 'username')
 key = config.get('General', 'key')
 pidfile = config.get('General', 'pidfile')
 debug = config.getboolean('General', 'debug')
+stdin = config.get('General', 'stdin')
+stdout = config.get('General', 'stdout')
+stderr = config.get('General', 'stderr')
 
 def pk(k): #press key
     subprocess.call(["xdotool", "key", "--clearmodifiers", "--delay", "25", k])
@@ -194,7 +197,7 @@ class MyDaemon(daemon.Daemon):
         serve()
  
 if __name__ == "__main__":
-    daemon = MyDaemon(pidfile, debug)
+    daemon = MyDaemon(pidfile, debugd=debug, stdin=stdin, stdout=stdout, stderr=stderr)
     if len(sys.argv) == 2:
         if 'start' == sys.argv[1]:
             sys.stdout.write("Starting...\n")
