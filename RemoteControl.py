@@ -4,7 +4,7 @@
 import sys, time, socket, subprocess, ConfigParser
 from daemon import daemon
 
-config = ConfigParser.ConfigParser()
+config = ConfigParser.RawConfigParser()
 config.read('config.cfg')
 
 # Set the third, optional argument of get to 1 if you wish to use raw mode.
