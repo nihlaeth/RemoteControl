@@ -10,7 +10,7 @@ class Daemon:
         Usage: subclass the Daemon class and override the run() method
         """
         def __init__(self, pidfile, debugb=False, stdin='/dev/null', stdout='/dev/null', stderr='/dev/null'):
-                self.debugb=debug
+                self.debugb=debugb
                 self.debug("start init\n")
                 self.stdin = stdin
                 self.stdout = stdout
