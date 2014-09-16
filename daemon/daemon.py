@@ -56,7 +56,7 @@ class Daemon:
                         sys.exit(1)
                 self.debug("split off second fork\n")
                 
-                if(self.debugb==True):
+                if(self.debugb==False):
                     # redirect standard file descriptors
                     sys.stdout.flush()
                     sys.stderr.flush()
