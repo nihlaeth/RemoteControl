@@ -199,7 +199,7 @@ class MyDaemon(daemon.Daemon):
         serve()
  
 if __name__ == "__main__":
-    daemon = MyDaemon(pidfile, debugd=debug, stdin=stdin, stdout=stdout, stderr=stderr)
+    daemon = MyDaemon(pidfile, debugb=debug, stdin=stdin, stdout=stdout, stderr=stderr)
     if len(sys.argv) == 2:
         if 'start' == sys.argv[1]:
             sys.stdout.write("Starting...\n")
