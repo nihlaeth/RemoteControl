@@ -4,7 +4,7 @@
 import sys, time, socket, subprocess, ConfigParser
 from daemon import daemon
 
-config = ConfigParser.RawConfigParser()
+config = ConfigParser.ConfigParser()
 config.read('config.cfg')
 
 # Set the third, optional argument of get to 1 if you wish to use raw mode.
@@ -13,7 +13,9 @@ clientip = config.get('General', 'clientip')
 username = config.get('General', 'username')
 key = config.get('General', 'key')
 pidfile = config.get('General', 'pidfile')
-debug = config.getboolean('General', 'debug')
+debug = config.get('General', 'debug')
+if(debug=="true" or debug=="1" or debug=="on"): debug = True
+else: debug = False
 stdin = config.get('General', 'stdin')
 stdout = config.get('General', 'stdout')
 stderr = config.get('General', 'stderr')
