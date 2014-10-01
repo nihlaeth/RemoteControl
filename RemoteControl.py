@@ -89,8 +89,10 @@ def control(c):
         pk('Control+Shift+c')
     elif(c=='paste'):
         pk('Control+Shift+p')
-    elif(c=='tw-train'):
+    elif(c=='switch-tab-send-4'):
         subprocess.call(["xdotool", "key", "--clearmodifiers", "--delay", "25", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return"])
+    elif(c=='switch-tab-send-10'):
+        subprocess.call(["xdotool", "key", "--clearmodifiers", "--delay", "25", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return"])
     elif(c=='ff-new-tab'):
         pk('Control+t')
     elif(c=='ff-back'):
