@@ -93,6 +93,8 @@ def control(c):
         subprocess.call(["xdotool", "key", "--clearmodifiers", "--delay", "25", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return"])
     elif(c=='switch-tab-send-10'):
         subprocess.call(["xdotool", "key", "--clearmodifiers", "--delay", "25", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return"])
+    elif(c=='switch-tab-send-5'):
+        subprocess.call(["xdotool", "key", "--clearmodifiers", "--delay", "25", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return"])
     elif(c=='ff-new-tab'):
         pk('Control+t')
     elif(c=='ff-back'):
