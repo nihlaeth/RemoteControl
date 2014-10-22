@@ -95,6 +95,10 @@ def control(c):
         subprocess.call(["xdotool", "key", "--clearmodifiers", "--delay", "25", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return"])
     elif(c=='switch-tab-send-5'):
         subprocess.call(["xdotool", "key", "--clearmodifiers", "--delay", "25", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return"])
+
+    elif(c=='switch-tab-send-4-slow'):
+        subprocess.call(["xdotool", "key", "--clearmodifiers", "--delay", "75", "Return", "Control+Tab", "Return", "Control+Tab", "Return", "Control+Tab", "Return"])
+
     elif(c=='ff-new-tab'):
         pk('Control+t')
     elif(c=='ff-back'):
@@ -213,6 +217,12 @@ if __name__ == "__main__":
             daemon.stop()
         elif 'restart' == sys.argv[1]:
             daemon.restart()
+        elif 'send-4' == sys.argv[1]:
+            control("switch-tab-send-4")
+        elif 'send-4-slow' == sys.argv[1]:
+            control("switch-tab-send-4-slow")
+        elif 'send-5' == sys.argv[1]:
+            control("switch-tab-send-5")
         else:
             print "Unknown command"
             sys.exit(2)
