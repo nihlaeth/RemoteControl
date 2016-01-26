@@ -54,3 +54,7 @@ docs/_build/
 
 # Vim backup files
 *~
+*.swp
+
+# don't include the actual config file
+config.cfg
