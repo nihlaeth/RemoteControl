@@ -1,4 +1,28 @@
 """Log to console with pretty colors."""
+import sys
+
+class LogLevel(object):
+    
+    """Keep track of log level."""
+
+    def __init__(self):
+        """Set basic log level (0 = none)."""
+        self.loglevel = 0
+
+    def set_level(self, level):
+        """Set log level (from string to int)."""
+        if level == "none":
+            self.loglevel = 0
+        elif level == "err":
+            self.loglevel = 1
+        elif level == "warn":
+            self.loglevel = 2
+        elif level == "info":
+            self.loglevel = 3
+        elif level == "verbose":
+            self.loglevel = 4
+
+LOGLEVEL = LogLevel()
 
 
 def log(lvl, msg):
@@ -11,15 +35,21 @@ def log(lvl, msg):
     endc = '\033[0m'
     # bold = "\033[1m"
     if lvl == "info":
-        print okblue + str(msg) + endc
+        if LOGLEVEL.loglevel >= 4:
+            sys.stdout.write(okblue + str(msg) + endc + '\n')
     elif lvl == "header":
-        print header + str(msg) + endc
+        if LOGLEVEL.loglevel >= 4:
+            sys.stdout.write(header + str(msg) + endc + '\n')
     elif lvl == "ok":
-        print okgreen + str(msg) + endc
+        if LOGLEVEL.loglevel >= 3:
+            sys.stdout.write(okgreen + str(msg) + endc + '\n')
     elif lvl == "fail":
-        print fail + str(msg) + endc
+        if LOGLEVEL.loglevel >= 1:
+            sys.stderr.write(fail + str(msg) + endc + '\n')
     elif lvl == "warn":
-        print warning + str(msg) + endc
+        if LOGLEVEL.loglevel >= 2:
+            sys.stderr.write(warning + str(msg) + endc + '\n')
     else:
-        print fail + "unknown log type"
-        print str(msg) + endc
+        if LOGLEVEL.loglevel >= 1:
+            sys.stderr.write(fail + "unknown log type" + '\n')
+            sys.stderr.write(str(msg) + endc + '\n')
