@@ -1,6 +1,5 @@
 #!/bin/env python
-
-
+"""Control a remote computer with speech recognition - client part."""
 
 import socket
 import sys
