@@ -23,13 +23,11 @@ class Daemon(object):
     def __init__(
             self,
             pidfile,
-            debug=False,
             stdin='/dev/null',
             stdout='/dev/null',
             stderr='/dev/null'):
         """Save settings."""
         log("info", "Enter init")
-        self.debug = debug
         self.stdin = stdin
         self.stdout = stdout
         self.stderr = stderr
@@ -76,16 +74,16 @@ class Daemon(object):
             sys.exit(1)
         log("info", "split off second fork")
 
-        if not self.debug:
-            # redirect standard file descriptors
-            sys.stdout.flush()
-            sys.stderr.flush()
-            si = file(self.stdin, 'r')
-            so = file(self.stdout, 'a+')
-            se = file(self.stderr, 'a+', 0)
-            os.dup2(si.fileno(), sys.stdin.fileno())
-            os.dup2(so.fileno(), sys.stdout.fileno())
-            os.dup2(se.fileno(), sys.stderr.fileno())
+        # if not self.debug:
+        #    # redirect standard file descriptors
+        #    sys.stdout.flush()
+        #    sys.stderr.flush()
+        #    si = file(self.stdin, 'r')
+        #    so = file(self.stdout, 'a+')
+        #    se = file(self.stderr, 'a+', 0)
+        #    os.dup2(si.fileno(), sys.stdin.fileno())
+        #    os.dup2(so.fileno(), sys.stdout.fileno())
+        #    os.dup2(se.fileno(), sys.stderr.fileno())
 
         log("info", "write pidfile")
         # write pidfile
